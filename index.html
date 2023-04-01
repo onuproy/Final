@@ -1,0 +1,29 @@
+mov ah,1
+int 21h
+sub al,30h 
+
+mov bl,al
+shl bl,2  
+
+
+mov ah,1
+int 21h
+sub al,30h 
+
+mov bh,al
+shr bh,1
+
+add bh,bl;  
+
+
+
+MOV AH,2   ;FOR OUTPUT
+INT 21H
+=============
+2.1
+mov al, 040h ; AL = 01000000b = 64
+shr al, 4 ; AL = 00001000b = 8
+===========
+2.2
+MOV AL, 02h    ; Move the value 02h into AL
+XOR AL, AL     ; XOR AL with itself to clear it
