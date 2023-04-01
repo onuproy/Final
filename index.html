@@ -19,11 +19,85 @@ add bh,bl;
 
 MOV AH,2   ;FOR OUTPUT
 INT 21H
+==========
+1.2
+mov al, 040h ; AL = 01000000b = 64
+shl al, 4 ; AL = 00001000b=8
+
+
 =============
 2.1
 mov al, 040h ; AL = 01000000b = 64
-shr al, 4 ; AL = 00001000b = 8
+shr al, 4 ; AL = 00001000b=8
 ===========
 2.2
 MOV AL, 02h    ; Move the value 02h into AL
-XOR AL, AL     ; XOR AL with itself to clear it
+XOR AL, AL     ; XOR AL with itself to clear it
+=============
+2.3
+MOV BL,0AAh
+ror BL,5
+
+=====================
+
+
+sub al, 30h 
+       mov bl, al
+       mov dl, bl
+       add dl, 30h   
+       mov ah,2
+       int 21h 
+       mov ah, 1
+       int 21h
+       sub al, 30h
+       mov cl, al  
+       MOV DL,cl       
+       add dl, 30h     
+       MOV AH,2   ;FOR OUTPUT
+       INT 21H      ;call INTERRUPT                   
+   MAIN ENDP 
+END MAIN
+# Part2:
+
+
+mov ah,1h
+int 21h
+
+sub al, 30h
+mov dh,al
+
+mov dl,'a' ; dl = ‘a‘
+mov ah, 2h ; character output subprogram
+int 21h ; call ms-dos output character
+
+
+
+# Part3:
+
+; prog4.asm: prompt user with ?
+; Author: Joe Carthy
+; Date: March 1994
+.model small
+.stack 100h
+.code
+start:
+; display ?
+mov dl,'?' ; copy ? to dl
+mov ah, 2h ; display subprogram
+int 21h ; call ms-dos to display ?
+; read character from keyboard
+mov ah, 1h ; keyboard input subprogram
+int 21h ; read character into al
+; save character entered while we display a space
+mov bl, al ; copy character to bl
+; display space character
+mov dl,' ' ; copy space to dl
+mov ah, 2h ; display subprogram
+int 21h ; call ms-dos to display space
+; display character read from keyboard
+mov dl, bl ; copy character entered to dl
+mov ah, 2h ; display subprogram
+int 21h ; display character in dl
+mov ax, 4c00h ; return to ms-dos
+int 21h
+end start
